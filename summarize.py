@@ -12,9 +12,6 @@ def load_image(image_path):
 image_path = './menus/menu2.jpg' #pictures of user takes
 image = load_image(image_path)
 language = "English" #change depending on user's selection
-prompt = '1.translate the menu to ' + language + '.\n'
-prompt += '2.if the dish does not contain ingredients, just translate the name of the dish to phrase that is easy to understand.\n'
-
 
 prompt = f"""
 You are a helpful restaurant reviewer. Summarize this restaurant's menu with the goal of helping a user decide whether to eat here or not. 
