@@ -9,7 +9,7 @@ def load_image(image_path):
 
     img = PIL.Image.open(image_path)
     return img
-image_path = './menus/menu2.jpg' #pictures of user takes
+image_path = './menus/gimbap.jpg' #pictures of user takes
 image = load_image(image_path)
 language = "English" #change depending on user's selection
 

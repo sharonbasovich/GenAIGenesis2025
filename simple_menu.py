@@ -11,10 +11,11 @@ def load_image(image_path):
     return img
 image_path = './menus/menu3.jpg' #pictures of user takes
 image = load_image(image_path)
-language = "English" #change depending on user's selection
-prompt = '1.translate the dishes in the picture to ' + language + '.\n'
-prompt += '2.if the dish does not contain ingredients, just translate the name of the dish to phrase that is easy to understand.\n'
+language = "Chinese" #change depending on user's selection
+prompt = f'1.translate the dishes in the picture to {language}.\n'
+prompt += '2.if the dish does not contain ingredients, just translate the name of the dish to phrase that contains the main ingredients.\n'
 prompt += '3.if the ingredients are too complex, use simplier terms.\n'
+prompt += '4.return the result in json file with the following format: {"dish_name": "translated name of the dish", "original_description": "translated original description", "simplified_description": "translated simplified description"}.\n'
 
 response = chat.send_message([prompt, image])
 
