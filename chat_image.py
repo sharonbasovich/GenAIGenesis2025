@@ -13,7 +13,7 @@ def load_image(image_path):
     img = PIL.Image.open(image_path)
     return img
 
-image_path = './gimbap.jpg'
+image_path = './menus/gimbap.jpg'
 img = load_image(image_path)
 
 while True:
