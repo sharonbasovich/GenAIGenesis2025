@@ -1,70 +1,27 @@
-import whisper
-import torch
-import numpy as np
-import sounddevice as sd
-import queue
+from google.cloud import speech
+import io
 
-# Load Whisper Tiny model
-model = whisper.load_model("tiny")  # or "tiny.en" for English only
+def transcribe_audio(audio_path):
+    client = speech.SpeechClient()
 
-# Check if CUDA is available, else use CPU
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model = model.to(device)
-
-# Audio configuration
-SAMPLE_RATE = 16000  # Whisper requires 16kHz input
-CHANNELS = 1         # Mono audio
-q = queue.Queue()
-recording = False    # Flag to control recording
-
-def audio_callback(indata, frames, time, status):
-    """Callback function to receive live audio and put it in a queue."""
-    if status:
-        print(status)
-    if recording:  # Only store audio if recording is active
-        q.put(indata.copy())
-
-def start_recording():
-    """Start recording and transcribing."""
-    global recording
-    recording = True
-    print("\nRecording started... Press ENTER to stop.")
-
-def stop_recording():
-    """Stop recording and process transcription."""
-    global recording
-    recording = False
-    print("\nProcessing audio...")
-
-    # Collect all audio chunks
-    audio_data = []
-    while not q.empty():
-        audio_data.append(q.get())
+    # Read the audio file
+    with io.open(audio_path, "rb") as audio_file:
+        content = audio_file.read()
     
-    if not audio_data:
-        print("No audio detected.")
-        return
-    
-    # Convert audio chunks to NumPy array
-    audio_data = np.concatenate(audio_data, axis=0)
-    audio_data = np.array(audio_data, dtype=np.float32)
-    print('audio', audio_data)
-    # Transcribe using Whisper
-    result = model.transcribe(audio_data, fp16=True)
-    print("\nTranscription:", result["text"])
+    # Configure request
+    audio = speech.RecognitionAudio(content=content)
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,  # Change if needed
+        sample_rate_hertz=16000,
+        language_code="en-US",
+    )
 
-# Start the audio input stream
-with sd.InputStream(samplerate=SAMPLE_RATE, channels=CHANNELS, callback=audio_callback):
-    print("Press ENTER to start recording, and ENTER again to stop.")
+    # Send request
+    response = client.recognize(config=config, audio=audio)
 
-    while True:
-        try:
-            input("Press ENTER to start recording...")  # Wait for user input
-            start_recording()
+    # Print results
+    for result in response.results:
+        print("Transcript:", result.alternatives[0].transcript)
 
-            input("Press ENTER to stop recording...")  # Wait for user input
-            stop_recording()
-
-        except KeyboardInterrupt:
-            print("\nExiting...")
-            break
+# Example usage
+transcribe_audio("audio.wav")

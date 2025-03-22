@@ -1,9 +1,9 @@
 import google.generativeai as genai
 import PIL.Image  # For image handling
 
-genai.configure(api_key="AIzaSyCCTK90t4X7SVmmFHHbwRtI8u5sk_b7DZE")  # Replace with your actual API key
+genai.configure(api_key="AIzaSyCCTK90t4X7SVmmFHHbwRtI8u5sk_b7DZE")
 
-model = genai.GenerativeModel('models/gemini-2.0-flash')
+model = genai.GenerativeModel('gemini-2.0-flash')
 chat = model.start_chat(history=[])
 
 print("Welcome to the Gemini Vision Chatbot!")
