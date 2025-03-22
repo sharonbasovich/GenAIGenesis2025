@@ -18,14 +18,22 @@ class MenuAnalyzerApp:
         
         # Configure Gemini API
         self.configure_gemini()
+
+
         # Create UI elements
         self.create_widgets()
     
     def configure_gemini(self):
         """Configure the Gemini API with the API key"""
         try:
+<<<<<<< HEAD
             GEMINI_API_KEY = "AIzaSyDaNd1nu-hc4tibF9wEd5MyE6yUByk5zt8"
             if not GEMINI_API_KEY:
+=======
+            api_key = os.environ.get("AIzaSyCCTK90t4X7SVmmFHHbwRtI8u5sk_b7DZE")
+            print('api', api_key)
+            if not api_key:
+>>>>>>> ec600b3e7757e2be4e8fd1bc0a976cf424838f96
                 messagebox.showerror("API Key Error", 
                                      "Gemini API key not found. Please set the GEMINI_API_KEY environment variable.")
             genai.configure(api_key=GEMINI_API_KEY)
