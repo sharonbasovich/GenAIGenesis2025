@@ -11,11 +11,12 @@ def load_image(image_path):
 
     img = PIL.Image.open(image_path)
     return img
-image_path = './menus/menu2.jpg' #pictures of user takes
+image_path = './menus/menu3.jpg' #pictures of user takes
 image = load_image(image_path)
 language = "English" #change depending on user's selection
-prompt = '1.translate the menu to ' + language + '.\n'
+prompt = '1.translate the dishes in the picture to ' + language + '.\n'
 prompt += '2.if the dish does not contain ingredients, just translate the name of the dish to phrase that is easy to understand.\n'
+prompt += '3.if the ingredients are too complex, use simplier terms.\n'
 
 response = chat.send_message([prompt, image])
 
