@@ -24,11 +24,11 @@ class MenuAnalyzerApp:
     def configure_gemini(self):
         """Configure the Gemini API with the API key"""
         try:
-            api_key = os.environ.get("AIzaSyBp9RYEmZorgO9XuX7cNZ_gGZyyDeW-1TM")
-            if not api_key:
+            GEMINI_API_KEY = "AIzaSyDaNd1nu-hc4tibF9wEd5MyE6yUByk5zt8"
+            if not GEMINI_API_KEY:
                 messagebox.showerror("API Key Error", 
                                      "Gemini API key not found. Please set the GEMINI_API_KEY environment variable.")
-            genai.configure(api_key=api_key)
+            genai.configure(api_key=GEMINI_API_KEY)
         except Exception as e:
             messagebox.showerror("API Configuration Error", str(e))
     
@@ -120,7 +120,7 @@ class MenuAnalyzerApp:
     def select_image(self):
         """Open file dialog to select an image"""
         file_types = [
-            ("Users\mattw\OneDrive\Pictures\Saved Pictures\menu1.jpg", "*.jpg *.jpeg *.png *.bmp *.tiff")
+            ("menus\menu2.jpg", "*.jpg *.jpeg *.png *.bmp *.tiff")
         ]
         
         file_path = filedialog.askopenfilename(
