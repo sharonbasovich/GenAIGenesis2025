@@ -1,7 +1,7 @@
 import google.generativeai as genai
 import PIL.Image  # For image handling
 
-genai.configure(api_key="AIzaSyCCTK90t4X7SVmmFHHbwRtI8u5sk_b7DZE")
+genai.configure(api_key="YOUR_API_KEY")
 
 model = genai.GenerativeModel('gemini-2.0-flash')
 chat = model.start_chat(history=[])
